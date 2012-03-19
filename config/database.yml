@@ -1,0 +1,10 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: autosuggest_and_tagging_development
+  pool: 5
+  username: root
+  password: root
+  socket: /var/run/mysqld/mysqld.sock
+

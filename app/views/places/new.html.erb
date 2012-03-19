@@ -1,0 +1,71 @@
+<div class='place_form'>
+  <%= form_for @place, :html => {:class => 'form-horizontal'} do |place_form|%>
+    <fieldset>  
+      <legend>Create Place</legend> 
+
+        <!-- 
+          Control Group
+        -->
+
+        <div class='control-group'>
+          <label class="control-label" for="input01">Name:</label>
+          <div class="controls">
+            <%=place_form.text_field :name, :class => 'input-xlarge' %>
+           </div>
+        </div>
+    
+        <!-- 
+          Control Group
+        -->
+        
+        <div class='control-group'>
+          <label class="control-label" for="input01">Description</label>
+          <div class='controls'>
+            <%=place_form.text_area :description, :cols => 3, :rows => 7, :class => 'input-xlarge'%>
+          </div>
+        </div>
+        
+        <!-- 
+          Control Group
+        -->
+        
+        
+        <div class='control-group'>
+          <label class="control-label" for="input01">Latitude</label>
+          <div class='controls'>
+            <%=place_form.text_field :latitude, :class => 'input-xlarge'%>
+          </div>
+        </div>
+        
+        
+        <!-- 
+          Control Group
+        -->
+        
+        
+        <div class='control-group'>
+          <label class="control-label" for="input01">Longitude</label>
+          <div class='controls'>
+            <%=place_form.text_field :latitude, :class => 'input-xlarge'%>
+          </div>
+        </div>
+        
+        <!-- 
+          Control Group
+        -->
+        
+        <div class='control-group'>
+          <label class="control-label" for="input01">Add Tags</label>
+          <div class='controls'>
+            <%=place_form.text_field :tag_list, :class => 'input-xlarge'%>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button class="btn">Cancel</button>
+        </div>
+
+   </fieldset>
+  <% end %>
+</div>
