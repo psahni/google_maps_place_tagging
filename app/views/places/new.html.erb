@@ -1,4 +1,6 @@
-<div class='place_form'>
+<%=javascript_include_tag 'http://maps.googleapis.com/maps/api/js?sensor=false', 'h5utils', 'place'%>
+
+<div class='place_form span3'>
   <%= form_for @place, :html => {:class => 'form-horizontal'} do |place_form|%>
     <fieldset>  
       <legend>Create Place</legend> 
@@ -68,4 +70,16 @@
 
    </fieldset>
   <% end %>
+</div>
+
+
+<!-- 
+  Control Group
+-->
+
+
+<div class='control-group span2'>
+  <div id="map" style="width: 50%">
+    <h5>Loading</h5>
+  </div> 
 </div>
