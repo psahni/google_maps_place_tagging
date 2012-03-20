@@ -21,8 +21,8 @@ function success(position){
 
    var mapcanvas = document.createElement('div');
    mapcanvas.id  = 'mapcanvas';
-   mapcanvas.style.height = '300px';
-   mapcanvas.style.width  = '500px';
+   mapcanvas.style.height = '400px';
+   mapcanvas.style.width  = '400px';
    document.getElementById('map').innerHTML = '';
    document.getElementById('map').appendChild(mapcanvas);
    LATITUDE =  position.coords.latitude;  
@@ -48,11 +48,11 @@ function success(position){
     title:"You are here!"
   });
 
- infowindow.open(MAP,marker);
+// infowindow.open(MAP,marker);
  
- google.maps.event.addListener(marker, 'click', function() {
+ /*google.maps.event.addListener(marker, 'click', function() {
   infowindow.open(MAP,marker);  
- });
+ });*/
 
  marker.setMap(MAP);
 }
