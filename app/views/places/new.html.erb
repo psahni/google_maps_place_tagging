@@ -1,9 +1,10 @@
+<div id='map'></div>
 <%=javascript_include_tag 'http://maps.googleapis.com/maps/api/js?sensor=false', 'h5utils', 'place'%>
 <div class='row'>
-  <div class='place_form span8'>
+  <div class='place_form span7 special'>
     <%= form_for @place, :html => {:class => 'form-horizontal'} do |place_form|%>
       <fieldset>  
-        <legend>Create Place</legend> 
+        <legend>Locate a place</legend> 
 
           <!-- 
             Control Group
@@ -35,7 +36,7 @@
           <div class='control-group'>
             <label class="control-label" for="input01">Latitude</label>
             <div class='controls'>
-              <%=place_form.text_field :latitude, :class => 'input-xlarge'%>
+              <%=place_form.text_field :latitude, :class => 'input-xlarge coordinates'%>
             </div>
           </div>
           
@@ -48,7 +49,7 @@
           <div class='control-group'>
             <label class="control-label" for="input01">Longitude</label>
             <div class='controls'>
-              <%=place_form.text_field :latitude, :class => 'input-xlarge'%>
+              <%=place_form.text_field :longitude, :class => 'input-xlarge coordinates'%>
             </div>
           </div>
           
@@ -63,9 +64,8 @@
             </div>
           </div>
           
-          <div class="form-actions">
+          <div class="buttons">
               <button type="submit" class="btn btn-primary">Save changes</button>
-              <button class="btn">Cancel</button>
           </div>
 
      </fieldset>
@@ -73,16 +73,3 @@
   </div>
 
 
-<!-- 
-  Control Group
--->
-
-<fieldset>  
-  <legend>Click on the map to fill latitude and longitude</legend> 
-  <div class='control-group span4' style='float:left'>
-    <div id="map">
-      <h5>Loading</h5>
-    </div> 
-  </div>
-</fieldset>
-</div>

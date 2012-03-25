@@ -15,16 +15,25 @@ head.appendChild(script);
 
 
 
-var LATITUDE, LONGITUDE; 
+var LATITUDE, LONGITUDE, MAP, latitudeField, longitudeField;
+var initial_guide_text = 'Just move the mouse on the map to fill latitude and longitude ( click on the map to save )';
+var guide_text_after_save = 'Just focus on one of the coordinates fields and move the mouse on the map to change latitude and longitude' 
+var coordinates_focus_event_needed = false;
+
+window.onload = function(){
+    latitudeField  = document.getElementById('place_latitude');
+    longitudeField = document.getElementById('place_longitude');
+} 
 
 function success(position){
 
    var mapcanvas = document.createElement('div');
    mapcanvas.id  = 'mapcanvas';
-   mapcanvas.style.height = '400px';
-   mapcanvas.style.width  = '400px';
+   mapcanvas.style.height = '670px';
+   mapcanvas.style.width  = '1265px';
    document.getElementById('map').innerHTML = '';
    document.getElementById('map').appendChild(mapcanvas);
+   
    LATITUDE =  position.coords.latitude;  
    LONGITUDE = position.coords.longitude; 
    
@@ -45,24 +54,69 @@ function success(position){
 
   var marker = new google.maps.Marker({
     position: latlng,
+    map: MAP,
     title:"You are here!"
   });
 
-// infowindow.open(MAP,marker);
+/* infowindow.open(MAP,marker); */
+ 
  
  /*google.maps.event.addListener(marker, 'click', function() {
-  infowindow.open(MAP,marker);  
+   infowindow.open(MAP,marker);  
  });*/
+ 
+  google.maps.event.addListener(MAP, 'mousemove', function(point) {
+    latitudeField.style.background = longitudeField.style.background ='yellow'; 
+    latitudeField.value  =  point.latLng.Ua;
+    longitudeField.value =  point.latLng.Va;
+  });
+  
+  
+  google.maps.event.addListener(MAP, 'click', function(point) {
+    latitudeField.style.background = longitudeField.style.background ='yellow';
+    google.maps.event.clearListeners(MAP, 'mousemove', function(point){});
+    document.getElementById('text_guide').innerHTML =  guide_text_after_save;
+    jQuery('#text_guide').fadeOut();
+    jQuery('#text_guide').fadeIn();
+    jQuery('input.coordinates').blur();
+    latitudeField.value  =  point.latLng.Ua;
+    longitudeField.value =  point.latLng.Va;
+    coordinates_focus_event_needed = true
+    afterSaveEventToCoordinateField();
+  });
+  
 
+  
+  google.maps.event.addListener(MAP, 'mouseout', function(point) {
+    latitudeField.style.background = longitudeField.style.background ='white'; 
+  });
+  
  marker.setMap(MAP);
 }
 
-function error(){
+/*--------------------------------------------------------------------*/
 
+function error(){
+  alert('Can not locate your current location')
 }
  
+/*--------------------------------------------------------------------*/
 
-  
+function afterSaveEventToCoordinateField(){
+    if( coordinates_focus_event_needed ){
+        coordinates_focus_event_needed = false;
+        jQuery('input.coordinates').bind('focus', function(){
+         google.maps.event.addListener(MAP, 'mousemove', function(point) {
+          latitudeField.style.background = longitudeField.style.background ='yellow'; 
+          latitudeField.value  =  point.latLng.Ua;
+          longitudeField.value =  point.latLng.Va;
+        });
+      });
+    }
+}
+
+/*--------------------------------------------------------------------*/
+
 function markCurrentLocation(){
     if (navigator.geolocation) 
      navigator.geolocation.getCurrentPosition(success, error);
@@ -71,4 +125,5 @@ function markCurrentLocation(){
 
 }
 
+/* Starting Point */
 setTimeout('markCurrentLocation()', 1000)

@@ -13,3 +13,26 @@ div.field_with_errors label.message{
 div.field_with_errors input{
     border-color: #b94a48;
 }
+
+body{
+    margin: 0px;
+    padding: 0px;
+}
+
+div.special{
+    position: absolute;
+    z-index: 9000;
+    top: 50px;
+    background: white;
+    left: 60px;   
+    opacity: 0.9;
+}
+
+.place_form label{
+    text-align: center !important;
+    width: 100px;
+}
+
+div.buttons{
+    text-align: center;
+}
