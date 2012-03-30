@@ -36,3 +36,7 @@ div.special{
 div.buttons{
     text-align: center;
 }
+
+a:hover{
+    cursor: pointer;
+}

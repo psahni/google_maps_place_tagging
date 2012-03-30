@@ -67,8 +67,8 @@ function success(position){
  
   google.maps.event.addListener(MAP, 'mousemove', function(point) {
     latitudeField.style.background = longitudeField.style.background ='yellow'; 
-    latitudeField.value  =  point.latLng.Ua;
-    longitudeField.value =  point.latLng.Va;
+    latitudeField.value  =  point.latLng.Ta;
+    longitudeField.value =  point.latLng.Ua;
   });
   
   
@@ -79,8 +79,8 @@ function success(position){
     jQuery('#text_guide').fadeOut();
     jQuery('#text_guide').fadeIn();
     jQuery('input.coordinates').blur();
-    latitudeField.value  =  point.latLng.Ua;
-    longitudeField.value =  point.latLng.Va;
+    latitudeField.value  =  point.latLng.Ta;
+    longitudeField.value =  point.latLng.Ua;
     coordinates_focus_event_needed = true
     afterSaveEventToCoordinateField();
   });
@@ -107,9 +107,10 @@ function afterSaveEventToCoordinateField(){
         coordinates_focus_event_needed = false;
         jQuery('input.coordinates').bind('focus', function(){
          google.maps.event.addListener(MAP, 'mousemove', function(point) {
+          document.getElementById('text_guide').innerHTML = initial_guide_text;
           latitudeField.style.background = longitudeField.style.background ='yellow'; 
-          latitudeField.value  =  point.latLng.Ua;
-          longitudeField.value =  point.latLng.Va;
+          latitudeField.value  =  point.latLng.Ta;
+          longitudeField.value =  point.latLng.Ua;
         });
       });
     }
@@ -122,8 +123,16 @@ function markCurrentLocation(){
      navigator.geolocation.getCurrentPosition(success, error);
     else
       error('not supported');
-
 }
 
 /* Starting Point */
-setTimeout('markCurrentLocation()', 1000)
+setTimeout('markCurrentLocation()', 1000);
+
+$(function(){
+    $('#place_tag_list').tagsInput({
+       placeholderColor: '#3A87AD'     
+    });
+    $('input.coordinates').bind('keydown', function(e){
+        return false;
+    });
+});

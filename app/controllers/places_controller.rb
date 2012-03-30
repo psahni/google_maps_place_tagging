@@ -1,6 +1,5 @@
 class PlacesController < ApplicationController
   
-  
   def index
   end
 
@@ -13,10 +12,20 @@ class PlacesController < ApplicationController
   def create
     @place = Place.new(params[:place])
     if @place.save
-      redirect_to @place, :notice => 'Place has been successfullu created'
+      respond_to do |format|
+        format.html { redirect_to @place, :notice => 'Place has been successfullu created' }
+        format.js {}
+     end
     else
-      render 'new'
-    end
+      respond_to do |format|
+        format.html{ render 'new'}
+        format.js { render :json => { :errors => @place.errors, :status => :unprocessable_entity   } }
+      end
+    end #if-else
   end  
+  
+  def fetch_coordinates
+    
+  end
   
 end

@@ -5,7 +5,7 @@ class CreatePlaces < ActiveRecord::Migration
       t.text :description
       t.float :latitude
       t.float :longitude
-
+      t.string :address
       t.timestamps
     end
   end

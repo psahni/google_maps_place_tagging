@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20120319160027) do
     t.text     "description"
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "address"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

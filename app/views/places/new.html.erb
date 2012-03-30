@@ -2,10 +2,12 @@
 <%=javascript_include_tag 'http://maps.googleapis.com/maps/api/js?sensor=false', 'h5utils', 'place'%>
 <div class='row'>
   <div class='place_form span7 special'>
-    <%= form_for @place, :html => {:class => 'form-horizontal'} do |place_form|%>
+    <%= form_for @place, :remote => true,:html => {:class => 'form-horizontal validate', :resource => 'place'} do |place_form|%>
       <fieldset>  
         <legend>Locate a place</legend> 
-
+        <div class='control-group span7' id='text_guide'>
+          Just move the mouse on the map to fill latitude and longitude ( click on the map to save )
+        </div>
           <!-- 
             Control Group
           -->
@@ -32,26 +34,60 @@
             Control Group
           -->
           
+          <div id='latlng'>
           
-          <div class='control-group'>
-            <label class="control-label" for="input01">Latitude</label>
-            <div class='controls'>
-              <%=place_form.text_field :latitude, :class => 'input-xlarge coordinates'%>
+            <div class='control-group'>
+              <label class="control-label" for="input01">Latitude</label>
+              <div class='controls'>
+                <%=place_form.text_field :latitude, :class => 'input-xlarge coordinates'%>
+              </div>
             </div>
-          </div>
-          
+            
+            
+            <!-- 
+              Control Group
+            -->
+            
+            <div class='control-group'>
+              <label class="control-label" for="input01">Longitude</label>
+              <div class='controls'>
+                <%=place_form.text_field :longitude, :class => 'input-xlarge coordinates'%>
+              </div>
+            </div>
           
           <!-- 
             Control Group
-          -->
-          
-          
-          <div class='control-group'>
-            <label class="control-label" for="input01">Longitude</label>
-            <div class='controls'>
-              <%=place_form.text_field :longitude, :class => 'input-xlarge coordinates'%>
-            </div>
+            -->
+             
+           <div class='control-group'>
+             <div class='controls'>Or <a class='toggle' target='address' source='latlng'>click here</a> fill address </div>
+           </div>
+           
           </div>
+          
+          <div id='address' style='display:none;'>
+           
+            <div class='control-group'>
+              <label class='control-label' for='input01'>Address Line 1</label>
+              <div class='controls'>
+                <%=place_form.text_field :address_line_1 %>
+              </div>
+            </div>  
+              
+             
+            <div class='control-group'>
+              <label class='control-label' for='input01'>Address Line 2</label>
+              <div class='controls'>
+                <%=place_form.text_field :address_line_2 %>
+              </div>
+            </div>  
+            
+            <div class='control-group'>
+             <div class='controls'>Or <a class='toggle' target='latlng' source='address'>click here</a> fill coordinates </div>
+            </div>
+           
+          </div>  
+          
           
           <!-- 
             Control Group
@@ -69,6 +105,7 @@
           </div>
 
      </fieldset>
+     
     <% end %>
   </div>
 

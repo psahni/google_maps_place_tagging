@@ -1,8 +1,8 @@
 AutosuggestAndTagging::Application.routes.draw do
   
   root :to => 'places#index'  
-  resources :places
-
+  resources :places, :collection => { :fetch_coordinates => :get }
+  resources :tags
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
