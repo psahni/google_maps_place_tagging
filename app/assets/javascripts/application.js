@@ -11,28 +11,37 @@
 
 
 
+/* function for inserting error messages */
 $(function(){
-    $('form.validate')
+$('form.validate')
+    .bind('ajax:beforeSend', function(){
+        if($('label.message').length) $('label.message').fadeOut('fast').remove();
+        if( $('div.field_with_errors').length ) {
+            $('div.field_with_errors').each(function(){
+                $(this).find('.form_field').unwrap('div.field_with_errors')
+            });            
+        }
+     })
     .bind('ajax:error', function(event, response, status, xhr){
-        var form = $(this);
-        var data = $.parseJSON(response.responseText);    
-        $.each(data.errors, function(k, v){
-            wrapErrorMessage(k , v, form.attr('resource'));
-        });
-    });
+	        var form = $(this);
+	        var data = $.parseJSON(response.responseText);    
+	        $.each(data.errors, function(k, v){
+                wrapErrorMessage(k , v, form.attr('resource'));
+               });
+		   });
 });
 
-/* function for inserting error messages */
+
 var wrapErrorMessage = function( label, message, resource ){
     var input_field = $('#' + resource + '_' + label );
-    if( !input_field.parent().hasClass('field_with_errors') ){
+        if( input_field.hasClass('no-validate') ) return ;
         var wrapper  = $('<div/>').addClass('field_with_errors')
         input_field.wrap(wrapper);
         var error_label = $('<label for = ' + resource + '_' + label + ' class=' + 'message>' + message + '</label>')
-        error_label.insertAfter(input_field)
-     }
+        error_label.insertAfter(input_field).fadeIn();
   }
   
+/* HIDE SHOW FIELDS */
 $(function(){
    $('.toggle').bind('click', function(e){
      e.preventDefault();
@@ -42,5 +51,10 @@ $(function(){
      if(source.length){
        $('#' + source).hide('fast');
      }
+     
+     if( $(this).attr('callback') ){
+        f = eval($(this).attr('callback')) 
+        f();
+      }
    });
 });

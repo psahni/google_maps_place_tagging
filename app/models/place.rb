@@ -1,8 +1,20 @@
 class Place < ActiveRecord::Base
+
+
   acts_as_taggable
   
-  #=> Validations
-  validates :name, :latitude, :longitude,  :presence => :true
+
   
-  attr_accessor :address_line_1, :address_line_2
+  
+  #=> Validations  
+ 
+  validates :name, :latitude, :longitude, :presence => :true 
+  
+  validates :address, :presence => :true , :if => lambda{|o| o.coordinates_blank? }
+  
+  
+  def coordinates_blank?
+    latitude.blank? && longitude.blank?
+  end
+  
 end

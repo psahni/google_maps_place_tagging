@@ -65,29 +65,30 @@ function success(position){
    infowindow.open(MAP,marker);  
  });*/
  
-  google.maps.event.addListener(MAP, 'mousemove', function(point) {
+  google.maps.event.addListener(MAP, 'mousemove', function(event) {
     latitudeField.style.background = longitudeField.style.background ='yellow'; 
-    latitudeField.value  =  point.latLng.Ta;
-    longitudeField.value =  point.latLng.Ua;
+    //console.log(event.latLng.lat())
+    latitudeField.value  =  event.latLng.lat();
+    longitudeField.value =  event.latLng.lng();
   });
   
   
-  google.maps.event.addListener(MAP, 'click', function(point) {
+  google.maps.event.addListener(MAP, 'click', function(event) {
     latitudeField.style.background = longitudeField.style.background ='yellow';
-    google.maps.event.clearListeners(MAP, 'mousemove', function(point){});
+    google.maps.event.clearListeners(MAP, 'mousemove', function(event){});          /** Just remove the event **/
     document.getElementById('text_guide').innerHTML =  guide_text_after_save;
     jQuery('#text_guide').fadeOut();
     jQuery('#text_guide').fadeIn();
     jQuery('input.coordinates').blur();
-    latitudeField.value  =  point.latLng.Ta;
-    longitudeField.value =  point.latLng.Ua;
+    latitudeField.value  =  event.latLng.lat();
+    longitudeField.value =  event.latLng.lng();
     coordinates_focus_event_needed = true
     afterSaveEventToCoordinateField();
   });
   
 
   
-  google.maps.event.addListener(MAP, 'mouseout', function(point) {
+  google.maps.event.addListener(MAP, 'mouseout', function(event) {
     latitudeField.style.background = longitudeField.style.background ='white'; 
   });
   
@@ -106,11 +107,11 @@ function afterSaveEventToCoordinateField(){
     if( coordinates_focus_event_needed ){
         coordinates_focus_event_needed = false;
         jQuery('input.coordinates').bind('focus', function(){
-         google.maps.event.addListener(MAP, 'mousemove', function(point) {
+         google.maps.event.addListener(MAP, 'mousemove', function(event) {
           document.getElementById('text_guide').innerHTML = initial_guide_text;
           latitudeField.style.background = longitudeField.style.background ='yellow'; 
-          latitudeField.value  =  point.latLng.Ta;
-          longitudeField.value =  point.latLng.Ua;
+          latitudeField.value  =  event.latLng.lat();
+          longitudeField.value =  event.latLng.lng();
         });
       });
     }
