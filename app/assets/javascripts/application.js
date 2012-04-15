@@ -52,7 +52,7 @@ $(function(){
      e.preventDefault();
      var target  = $(this).attr('target');
      var source = $(this).attr('source');
-     $('#' + target).toggle('slow');
+     $('#' + target).fadeIn('fast');
      if(source.length){
        $('#' + source).hide('fast');
      }

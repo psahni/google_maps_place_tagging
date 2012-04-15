@@ -25,7 +25,9 @@ class PlacesController < ApplicationController
   end  
   
   def fetch_coordinates
-    
+    address =  params[:address]
+    lat,lan = Geocoder.coordinates(address)
+    render :json => { :lat => lat, :lng => lan}
   end
   
 end

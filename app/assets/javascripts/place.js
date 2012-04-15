@@ -19,6 +19,9 @@ var LATITUDE, LONGITUDE, MAP, latitudeField, longitudeField;
 var initial_guide_text = 'Just move the mouse on the map to fill latitude and longitude ( click on the map to save )';
 var guide_text_after_save = 'Just focus on one of the coordinates fields and move the mouse on the map to change latitude and longitude' ;
 var coordinates_focus_event_needed = false;
+var minLengthForAddressField = 8;
+var wait = false;
+var markers = [];
 
 window.onload = function(){
     latitudeField  = document.getElementById('place_latitude');
@@ -48,22 +51,28 @@ function success(position){
   
   MAP = new google.maps.Map(document.getElementById("mapcanvas"), myOptions);
 
-  var infowindow = new google.maps.InfoWindow({
-    content: "<p>You are here</p>"
+/*  var infowindow = new google.maps.InfoWindow({
+    content: "You are here"
   });
+  
+  infowindow.open(MAP,marker);
 
+
+*/
+  
+ 
   var marker = new google.maps.Marker({
     position: latlng,
     map: MAP,
     title:"You are here!"
   });
 
-/* infowindow.open(MAP,marker); */
+  markers.push(marker);
  
  
- /*google.maps.event.addListener(marker, 'click', function() {
+ google.maps.event.addListener(marker, 'click', function() {
    infowindow.open(MAP,marker);  
- });*/
+ });
  
   google.maps.event.addListener(MAP, 'mousemove', function(event) {
     latitudeField.style.background = longitudeField.style.background ='yellow'; 
@@ -134,17 +143,22 @@ function removeListenerToCoordinates(){
     google.maps.event.clearListeners(MAP, 'mousemove', function(event){}); 
 }
 function resetAddressField(){
+    var timer;
     $('#place_address').removeClass('no-validate');
-    $('#place_address')
-    .live('keyup', function(){
-        setTimeout("fetchCoordinates()", 5000)
-    })
-    .live('blur', function(){
-        fetchCoordinates();
-    });
     removeListenerToCoordinates()
     $('.coordinates').addClass('no-validate').val(''); 
     unWrapErrorMessage();
+    $('#place_address')
+    .live('focus', function(){
+        /* There must be some better way to do it */
+        //if(document.activeElement == $(this)[0] && $(this).val().length > minLengthForAddressField && !wait) 
+        timer = setInterval("if( document.activeElement == $('#place_address')[0] && $('#place_address').val().length > minLengthForAddressField && !wait)  fetchCoordinates()", 3000);
+    })
+    .live('blur', function(){
+        clearInterval(timer);
+        if( latitudeField.value.length > 0 && longitudeField.value.length > 0)
+            mapCoordinates();
+    });
 }
 
 function resetCoordinatesField(){
@@ -155,10 +169,53 @@ function resetCoordinatesField(){
 }
 
 function fetchCoordinates(){
+    wait = true;
     var url = $('#url_for_request_coordinates').val();
-    $.get(url, { address: $('#place_address').val() }, function(res){
-        console.log(res);
-    });
+    var jqxhr = $.get(url, { address: $('#place_address').val() })
+    .success( function(response){ 
+        wait = false;
+        //console.log(response)
+        $('#place_latitude').val(response.lat);
+        $('#place_longitude').val(response.lng)
+     })
+    .error(function(){
+        wait = false; 
+        alert("Oops! Something went wrong..working on it.."); 
+     });
+}
+
+function mapCoordinates(){
+   clearOverlays();
+   
+   var latlng = new google.maps.LatLng($('#place_latitude').val(), $('#place_longitude').val() );
+   
+   var myOptions = {
+      mapTypeControl: false,
+      zoom: 11,
+      center: latlng,
+      navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+  
+    var marker = new google.maps.Marker({
+        position: latlng,
+        map: MAP,
+        title:"You are here!"
+  });
+
+  MAP = new google.maps.Map(document.getElementById("mapcanvas"), myOptions);
+  markers.push(marker);
+  marker.setMap(MAP);
+}
+
+function clearOverlays() {
+  if (markers) {
+    for (var i = 0; i < markers.length; i++ ) {
+      markers[i].setMap(null);
+    }
+  }
+  
+  
 }
 /*--------------------- Starting Point---------------------------------- */
 setTimeout('markCurrentLocation()', 1000);
@@ -168,6 +225,12 @@ $(function(){
        placeholderColor: '#3A87AD'     
     });
     $('input.coordinates').bind('keydown', function(e){
+        return false;
+    });
+    $('#locate_button').bind('click', function(e){
+        e.preventDefault;
+        fetchCoordinates();
+        mapCoordinates();
         return false;
     });
 });
