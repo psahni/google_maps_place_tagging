@@ -13,7 +13,7 @@ class PlacesController < ApplicationController
     @place = Place.new(params[:place])
     if @place.save
       respond_to do |format|
-        format.html { redirect_to @place, :notice => 'Place has been successfullu created' }
+        format.html { redirect_to @place, :notice => 'Place has been successfully created' }
         format.js {}
      end
     else

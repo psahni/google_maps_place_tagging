@@ -15,13 +15,8 @@
 $(function(){
 $('form.validate')
     .bind('ajax:beforeSend', function(){
-        if($('label.message').length) $('label.message').fadeOut('fast').remove();
-        if( $('div.field_with_errors').length ) {
-            $('div.field_with_errors').each(function(){
-                $(this).find('.form_field').unwrap('div.field_with_errors')
-            });            
-        }
-     })
+        unWrapErrorMessage();
+       })
     .bind('ajax:error', function(event, response, status, xhr){
 	        var form = $(this);
 	        var data = $.parseJSON(response.responseText);    
@@ -40,7 +35,17 @@ var wrapErrorMessage = function( label, message, resource ){
         var error_label = $('<label for = ' + resource + '_' + label + ' class=' + 'message>' + message + '</label>')
         error_label.insertAfter(input_field).fadeIn();
   }
-  
+
+
+var unWrapErrorMessage = function(){
+    if($('label.message').length) $('label.message').fadeOut('fast').remove();
+    if( $('div.field_with_errors').length ) {
+        $('div.field_with_errors').each(function(){
+            $(this).find('.form_field').unwrap('div.field_with_errors')
+        });            
+    }
+} 
+
 /* HIDE SHOW FIELDS */
 $(function(){
    $('.toggle').bind('click', function(e){

@@ -17,7 +17,7 @@ head.appendChild(script);
 
 var LATITUDE, LONGITUDE, MAP, latitudeField, longitudeField;
 var initial_guide_text = 'Just move the mouse on the map to fill latitude and longitude ( click on the map to save )';
-var guide_text_after_save = 'Just focus on one of the coordinates fields and move the mouse on the map to change latitude and longitude' 
+var guide_text_after_save = 'Just focus on one of the coordinates fields and move the mouse on the map to change latitude and longitude' ;
 var coordinates_focus_event_needed = false;
 
 window.onload = function(){
@@ -40,7 +40,7 @@ function success(position){
    var latlng = new google.maps.LatLng(LATITUDE, LONGITUDE);
    var myOptions = {
       mapTypeControl: false,
-      zoom: 10,
+      zoom: 11,
       center: latlng,
       navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
       mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -75,7 +75,7 @@ function success(position){
   
   google.maps.event.addListener(MAP, 'click', function(event) {
     latitudeField.style.background = longitudeField.style.background ='yellow';
-    google.maps.event.clearListeners(MAP, 'mousemove', function(event){});          /** Just remove the event **/
+    removeListenerToCoordinates();
     document.getElementById('text_guide').innerHTML =  guide_text_after_save;
     jQuery('#text_guide').fadeOut();
     jQuery('#text_guide').fadeIn();
@@ -107,12 +107,7 @@ function afterSaveEventToCoordinateField(){
     if( coordinates_focus_event_needed ){
         coordinates_focus_event_needed = false;
         jQuery('input.coordinates').bind('focus', function(){
-         google.maps.event.addListener(MAP, 'mousemove', function(event) {
-          document.getElementById('text_guide').innerHTML = initial_guide_text;
-          latitudeField.style.background = longitudeField.style.background ='yellow'; 
-          latitudeField.value  =  event.latLng.lat();
-          longitudeField.value =  event.latLng.lng();
-        });
+        addListenerToCoordinates() 
       });
     }
 }
@@ -126,7 +121,46 @@ function markCurrentLocation(){
       error('not supported');
 }
 
-/* Starting Point */
+function addListenerToCoordinates(){
+    google.maps.event.addListener(MAP, 'mousemove', function(event) {
+      document.getElementById('text_guide').innerHTML = initial_guide_text;
+      latitudeField.style.background = longitudeField.style.background ='yellow'; 
+      latitudeField.value  =  event.latLng.lat();
+      longitudeField.value =  event.latLng.lng();
+    });
+}
+
+function removeListenerToCoordinates(){
+    google.maps.event.clearListeners(MAP, 'mousemove', function(event){}); 
+}
+function resetAddressField(){
+    $('#place_address').removeClass('no-validate');
+    $('#place_address')
+    .live('keyup', function(){
+        setTimeout("fetchCoordinates()", 5000)
+    })
+    .live('blur', function(){
+        fetchCoordinates();
+    });
+    removeListenerToCoordinates()
+    $('.coordinates').addClass('no-validate').val(''); 
+    unWrapErrorMessage();
+}
+
+function resetCoordinatesField(){
+    $('#place_address').addClass('no-validate'); 
+    addListenerToCoordinates();
+    $('.coordinates').removeClass('no-validate'); 
+    unWrapErrorMessage()
+}
+
+function fetchCoordinates(){
+    var url = $('#url_for_request_coordinates').val();
+    $.get(url, { address: $('#place_address').val() }, function(res){
+        console.log(res);
+    });
+}
+/*--------------------- Starting Point---------------------------------- */
 setTimeout('markCurrentLocation()', 1000);
 
 $(function(){

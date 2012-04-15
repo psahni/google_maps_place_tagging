@@ -60,7 +60,7 @@
             -->
              
            <div class='control-group'>
-             <div class='controls'>Or <a class='toggle' target='address' source='latlng' callback="(function(){ $('#place_address').removeClass('no-validate'); $('.coordinates').addClass('no-validate').val(''); })">click here</a> fill address </div>
+             <div class='controls'>Or <a class='toggle' target='address' source='latlng' callback="(function(){ resetAddressField() })">click here</a> fill address </div>
            </div>
            
           </div>
@@ -71,16 +71,15 @@
               <label class='control-label' for='input01'>Address:</label>
               <div class='controls'>
                 <%=place_form.text_field :address, :class => 'input-xlarge form_field no-validate' %>
+                <%=hidden_field_tag 'url_for_request_coordinates', "#{ fetch_coordinates_places_path }" %>
+                <button id='locate_button'>Locate On Map</button>
               </div>
             </div>  
-              
             
             <div class='control-group'>
-             <div class='controls'>Or <a class='toggle' target='latlng' source='address' callback="(function(){ $('#place_address').addClass('no-validate'); $('.coordinates').removeClass('no-validate'); })">click here</a> fill coordinates </div>
+             <div class='controls'>Or <a class='toggle' target='latlng' source='address' callback="(function(){ resetCoordinatesField() })">click here</a> fill coordinates </div>
             </div>
-           
           </div>  
-          
           
           <!-- 
             Control Group

@@ -24,7 +24,7 @@ div.special{
     z-index: 9000;
     top: 50px;
     background: white;
-    left: 60px;   
+    left: 15px;   
     opacity: 0.9;
 }
 
@@ -39,4 +39,11 @@ div.buttons{
 
 a:hover{
     cursor: pointer;
+}
+#locate_button{
+    font-size: 11px;
+    color: green;
+}
+#locate_button:hover{
+    color: red;
 }
