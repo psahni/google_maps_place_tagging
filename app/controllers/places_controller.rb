@@ -11,7 +11,7 @@ class PlacesController < ApplicationController
 
   def create
     @place = Place.new(params[:place])
-    if @place.save
+    if @saved = @place.save
       respond_to do |format|
         format.html { redirect_to @place, :notice => 'Place has been successfully created' }
         format.js {}

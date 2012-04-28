@@ -46,6 +46,7 @@ var unWrapErrorMessage = function(){
     }
 } 
 
+
 /* HIDE SHOW FIELDS */
 $(function(){
    $('.toggle').bind('click', function(e){
@@ -56,10 +57,15 @@ $(function(){
      if(source.length){
        $('#' + source).hide('fast');
      }
-     
      if( $(this).attr('callback') ){
         f = eval($(this).attr('callback')) 
         f();
       }
    });
+});
+
+$(function(){
+    $('.autocomplete_off').each(function(){
+        $(this).attr('autocomplete', 'off');
+    });
 });

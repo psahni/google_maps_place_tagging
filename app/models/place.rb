@@ -12,6 +12,7 @@ class Place < ActiveRecord::Base
   
   validates :address, :presence => :true , :if => lambda{|o| o.coordinates_blank? }
   
+  validates :name, :uniqueness => :true
   
   def coordinates_blank?
     latitude.blank? && longitude.blank?

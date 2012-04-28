@@ -1,21 +1,14 @@
 /*var head       = document.getElementsByTagName('head')[0];
 var script     = document.createElement('script');
 script.type    = 'text/javascript';
-
-script.onload  = script.onreadystatechange = function(){ 
-  if(google){
-    markCurrentLocation();
-  }
-  
-} 
-
+script.onload  = script.onreadystatechange = function(){ if(google){ markCurrentLocation();}} 
 script.src= "http://maps.googleapis.com/maps/api/js?sensor=false" ;   
 head.appendChild(script);
 */
 
 
 
-var LATITUDE, LONGITUDE, MAP, latitudeField, longitudeField;
+var LATITUDE, LONGITUDE, MAP, latitudeField, longitudeField, locate_button;
 var initial_guide_text = 'Just move the mouse on the map to fill latitude and longitude ( click on the map to save )';
 var guide_text_after_save = 'Just focus on one of the coordinates fields and move the mouse on the map to change latitude and longitude' ;
 var coordinates_focus_event_needed = false;
@@ -26,6 +19,7 @@ var markers = [];
 window.onload = function(){
     latitudeField  = document.getElementById('place_latitude');
     longitudeField = document.getElementById('place_longitude');
+    locate_button  = document.getElementById('locate_button');
 } 
 
 function success(position){
@@ -152,12 +146,13 @@ function resetAddressField(){
     .live('focus', function(){
         /* There must be some better way to do it */
         //if(document.activeElement == $(this)[0] && $(this).val().length > minLengthForAddressField && !wait) 
-        timer = setInterval("if( document.activeElement == $('#place_address')[0] && $('#place_address').val().length > minLengthForAddressField && !wait)  fetchCoordinates()", 3000);
+        $(locate_button).removeAttr('disabled');
+        timer = setInterval("if( document.activeElement == $('#place_address')[0] && $('#place_address').val().length > minLengthForAddressField && !wait)  fetchCoordinates()", 15000);
     })
     .live('blur', function(){
         clearInterval(timer);
         if( latitudeField.value.length > 0 && longitudeField.value.length > 0)
-            mapCoordinates();
+            setTimeout("mapCoordinates()", 2000);
     });
 }
 
@@ -174,9 +169,15 @@ function fetchCoordinates(){
     var jqxhr = $.get(url, { address: $('#place_address').val() })
     .success( function(response){ 
         wait = false;
-        //console.log(response)
-        $('#place_latitude').val(response.lat);
-        $('#place_longitude').val(response.lng)
+        if( response.lat == null  || response.lng == null ){
+            alert('Invalid address');
+            $('#place_address').blur();
+            locate_button.disabled = 'disabled';
+           }
+        else{
+                $('#place_latitude').val(response.lat);
+                $('#place_longitude').val(response.lng);
+             }
      })
     .error(function(){
         wait = false; 
@@ -218,6 +219,7 @@ function clearOverlays() {
   
 }
 /*--------------------- Starting Point---------------------------------- */
+
 setTimeout('markCurrentLocation()', 1000);
 
 $(function(){
