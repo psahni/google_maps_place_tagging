@@ -1,11 +1,11 @@
 <div id='map'></div>
 <%=javascript_include_tag 'http://maps.googleapis.com/maps/api/js?sensor=false', 'h5utils', 'place'%>
 <div class='row'>
-  <div class='place_form span7 special'>
+  <div class='place_form span6 special'>
 	  <%= form_for @place, :remote => true, :html => {:class => 'form-horizontal validate', :resource => 'place'} do |place_form|%>
       <fieldset>  
         <legend>Locate a place</legend> 
-        <div class='control-group span7' id='text_guide'>
+        <div class='control-group span6' id='text_guide'>
           Just move the mouse on the map to fill latitude and longitude ( click on the map to save )
         </div>
           <!-- 

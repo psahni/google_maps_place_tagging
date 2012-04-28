@@ -1,0 +1,12 @@
+<% content_for :heading do%>
+  <h2 class='page-header'>Listing of places tagged</h2>
+<% end %>
+<div class='row'>
+  <% @places.each do |place|%>
+  <div class='span12 solo_place'>
+    <h3 class='red'><%=place.name.capitalize%></h3>
+      <%=place.description%>
+    </p>
+  </div>
+  <% end%>
+</div>

@@ -2,15 +2,12 @@
 <html>
 <head>
   <title>AutosuggestAndTagging</title>
-  <%= stylesheet_link_tag   "application" %>
+  <%= stylesheet_link_tag    "places" %>
   <%= javascript_include_tag "application", "jquery.tagsinput" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class='container'>
-  <header class='subhead'>
-    <%=yield :heading%>
-  </header>
+  <div>
   <%= yield %>
   </div>
 </body>

@@ -1,11 +1,13 @@
 class PlacesController < ApplicationController
   
   def index
+    @places = Place.all :include => :tags
   end
 
 
   def new
     @place = Place.new
+    render :layout => 'map'
   end
 
 

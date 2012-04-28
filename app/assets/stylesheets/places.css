@@ -1,0 +1,52 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *= require_self
+ *= require bootstrap/css/bootstrap.css
+ *= require bootstrap/css/bootstrap-responsive.css 
+ *= require jquery.tagsinput
+*/
+
+
+div.field_with_errors label.message{
+    color: #B94A48;
+}
+
+div.field_with_errors input{
+    border-color: #b94a48;
+}
+
+body{
+    margin: 0px;
+    padding: 0px;
+}
+
+div.special{
+    position: absolute;
+    z-index: 9000;
+    top: 50px;
+    background: white;
+    left: 15px;   
+    opacity: 0.9;
+}
+
+.place_form label{
+    text-align: center !important;
+    width: 100px;
+}
+
+div.buttons{
+    text-align: center;
+}
+
+a:hover{
+    cursor: pointer;
+}
+#locate_button{
+    font-size: 11px;
+    color: green;
+}
+#locate_button:hover{
+    color: red;
+}
