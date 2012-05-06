@@ -17,3 +17,15 @@ body{
     border-bottom: 1px solid #F7F7F7;
     padding: 8px;
 }
+
+.right{
+    float: right;
+}
+
+.left{
+    float: left;
+}
+div.action_items{
+    padding: 10px;
+    border-bottom: 1px solid #EEE;
+}
