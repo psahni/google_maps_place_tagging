@@ -54,3 +54,6 @@ a:hover{
 .container{
     margin-left: 0px !important;
 }
+div#map{
+    margin-top: 40px;
+}

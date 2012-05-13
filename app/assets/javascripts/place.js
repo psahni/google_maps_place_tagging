@@ -122,7 +122,7 @@ function markLocations(places_array){
    
    var myOptions = {
       mapTypeControl: false,
-      zoom: 13,
+      zoom: 12,
       center: new google.maps.LatLng(28.57, 77.32),
       navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
       mapTypeId: google.maps.MapTypeId.ROADMAP
