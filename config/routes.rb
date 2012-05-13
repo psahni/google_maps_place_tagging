@@ -4,7 +4,9 @@ AutosuggestAndTagging::Application.routes.draw do
   resources :places do 
     collection do
       get 'fetch_coordinates'
+      get 'full_map'
     end
+    
   end
   
   resources :tags

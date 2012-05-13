@@ -2,6 +2,12 @@ class PlacesController < ApplicationController
   
   def index
     @places = Place.all :include => :tags
+    respond_to do |format|
+      format.html
+      format.json{ 
+              render :json => { :markers => @places }
+          }
+    end
   end
 
 
@@ -30,6 +36,10 @@ class PlacesController < ApplicationController
     address =  params[:address]
     lat,lan = Geocoder.coordinates(address)
     render :json => { :lat => lat, :lng => lan}
+  end
+  
+  def full_map
+    render :layout => 'map'
   end
   
 end

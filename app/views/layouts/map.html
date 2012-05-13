@@ -3,12 +3,37 @@
 <head>
   <title>AutosuggestAndTagging</title>
   <%= stylesheet_link_tag    "places" %>
-  <%= javascript_include_tag "application", "jquery.tagsinput" %>
+  <%= javascript_include_tag "application", 'http://maps.googleapis.com/maps/api/js?sensor=false', 'map' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div>
-  <%= yield %>
+  <div class='container'>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="./index.html">Tag places on Map</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="">
+                <a href="<%=new_place_path%>">Add new place</a>
+              </li>
+              <li class="">
+                <a href="<%[:places]%>">Listing</a>
+              </li>
+              <li>
+                <a href='<%=full_map_places_path%>'>Full Map</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+   <%= yield %>  
   </div>
 </body>
 </html>

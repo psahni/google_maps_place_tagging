@@ -1,0 +1,17 @@
+<script>
+  $(function(){
+    var jqxhr  = $.get('<%=places_path(:format => :json)%>')
+    .success(function(responseText){
+      markLocations(responseText);  
+    })
+    .error(function(xhr){
+      console.log(xhr);
+      alert('OOPS! Something went wrong!!')
+    });
+  });
+</script>
+
+
+<div id='map'>
+</div>
+

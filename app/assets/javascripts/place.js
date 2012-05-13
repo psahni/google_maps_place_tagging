@@ -22,6 +22,12 @@ window.onload = function(){
     locate_button  = document.getElementById('locate_button');
 } 
 
+
+function initialize(){
+
+
+}
+
 function success(position){
 
    var mapcanvas = document.createElement('div');
@@ -103,7 +109,45 @@ function success(position){
 function error(){
   alert('Can not locate your current location')
 }
- 
+/*--------------------------------------------------------------------*/
+
+function markLocations(places_array){
+   
+   var mapcanvas = document.createElement('div');
+   mapcanvas.id  = 'mapcanvas';
+   mapcanvas.style.height = '670px';
+   mapcanvas.style.width  = '1265px';
+   document.getElementById('map').innerHTML = '';
+   document.getElementById('map').appendChild(mapcanvas);
+   
+   var myOptions = {
+      mapTypeControl: false,
+      zoom: 13,
+      center: new google.maps.LatLng(28.57, 77.32),
+      navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+  
+   MAP = new google.maps.Map(document.getElementById("mapcanvas"), myOptions);
+   
+   for( i=0; i<places_array.markers.length;i++){
+    
+    var lat = places_array.markers[i].latitude;  
+    var lng = places_array.markers[i].longitude; 
+   
+    marker = new google.maps.Marker({
+        position: new google.maps.LatLng(lat, lng),
+        map: MAP,
+        draggable: false,
+        animation: google.maps.Animation.DROP
+    });
+    
+    setTimeout(function(){ 
+        markers.push( marker); 
+     }, '2000');
+    
+   } 
+} 
 /*--------------------------------------------------------------------*/
 
 function afterSaveEventToCoordinateField(){
@@ -124,6 +168,8 @@ function markCurrentLocation(){
       error('not supported');
 }
 
+/*--------------------------------------------------------------------*/
+
 function addListenerToCoordinates(){
     google.maps.event.addListener(MAP, 'mousemove', function(event) {
       document.getElementById('text_guide').innerHTML = initial_guide_text;
@@ -133,9 +179,14 @@ function addListenerToCoordinates(){
     });
 }
 
+/*--------------------------------------------------------------------*/
+
 function removeListenerToCoordinates(){
     google.maps.event.clearListeners(MAP, 'mousemove', function(event){}); 
 }
+
+/*--------------------------------------------------------------------*/
+
 function resetAddressField(){
     var timer;
     $('#place_address').removeClass('no-validate');
@@ -152,9 +203,11 @@ function resetAddressField(){
     .live('blur', function(){
         clearInterval(timer);
         if( latitudeField.value.length > 0 && longitudeField.value.length > 0)
-            setTimeout("mapCoordinates()", 2000);
+            setTimeout("mapCoordinates()", 1000);
     });
 }
+
+/*--------------------------------------------------------------------*/
 
 function resetCoordinatesField(){
     $('#place_address').addClass('no-validate'); 
@@ -162,6 +215,8 @@ function resetCoordinatesField(){
     $('.coordinates').removeClass('no-validate'); 
     unWrapErrorMessage()
 }
+
+/*--------------------------------------------------------------------*/
 
 function fetchCoordinates(){
     wait = true;
@@ -184,6 +239,8 @@ function fetchCoordinates(){
         alert("Oops! Something went wrong..working on it.."); 
      });
 }
+
+/*--------------------------------------------------------------------*/
 
 function mapCoordinates(){
    clearOverlays();
@@ -209,6 +266,8 @@ function mapCoordinates(){
   marker.setMap(MAP);
 }
 
+/*--------------------------------------------------------------------*/
+
 function clearOverlays() {
   if (markers) {
     for (var i = 0; i < markers.length; i++ ) {
@@ -218,9 +277,8 @@ function clearOverlays() {
   
   
 }
-/*--------------------- Starting Point---------------------------------- */
 
-setTimeout('markCurrentLocation()', 1000);
+/*--------------------------------------------------------------------*/
 
 $(function(){
     $('#place_tag_list').tagsInput({
@@ -236,3 +294,7 @@ $(function(){
         return false;
     });
 });
+
+/*--------------------- Starting Point---------------------------------- */
+
+

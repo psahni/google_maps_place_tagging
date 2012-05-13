@@ -50,3 +50,7 @@ a:hover{
 #locate_button:hover{
     color: red;
 }
+
+.container{
+    margin-left: 0px !important;
+}

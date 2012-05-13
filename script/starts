@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+puts Rails.root
+require Rails.root.join('config/boot.rb')
+#require 'rails/commands'
+
+puts File.expand_path('starts')
+#system("rails s")
+#rescue
+ # puts "==> #{ $!.inspect  }"

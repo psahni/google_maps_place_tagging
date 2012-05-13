@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+PORT = 3011
+begin
+  puts "========== Starting rails server ========== at #{ PORT }"
+  system("rails server -p#{ PORT }")
+rescue
+  puts "==> #{ $!.inspect  }"
+end

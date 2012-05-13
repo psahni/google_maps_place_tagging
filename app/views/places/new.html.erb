@@ -1,5 +1,4 @@
 <div id='map'></div>
-<%=javascript_include_tag 'http://maps.googleapis.com/maps/api/js?sensor=false', 'h5utils', 'place'%>
 <div class='row'>
   <div class='place_form span6 special'>
 	  <%= form_for @place, :remote => true, :html => {:class => 'form-horizontal validate', :resource => 'place'} do |place_form|%>
@@ -104,4 +103,4 @@
     <% end %>
   </div>
 
-
+<%=javascript_tag "setTimeout('markCurrentLocation()', 1000);"%>

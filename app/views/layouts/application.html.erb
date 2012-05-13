@@ -22,20 +22,23 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li class="">
-                <a href="./index.html">Add new place</a>
+                <a href="<%=new_place_path%>">Add new place</a>
               </li>
               <li class="">
-                <a href="./index.html">Listing</a>
+                <a href="<%[:places]%>">Listing</a>
+              </li>
+              <li>
+                <a href='<%=full_map_places_path%>'>Full Map</a>
               </li>
             </ul>
           </div>
         </div>
       </div>
-  </div>
+    </div>
   <header class='subhead'>
     <%=yield :heading%>
   </header>
   <%= yield %>
-  </div>
+ </div>
 </body>
 </html>
