@@ -17,5 +17,10 @@ class Place < ActiveRecord::Base
   def coordinates_blank?
     latitude.blank? && longitude.blank?
   end
-  
+
+  def self.find_all_with_tag(tag_str)
+    tagged_with(tag_str)    
+  end  
 end
+
+#https://github.com/mbleigh/acts-as-taggable-on

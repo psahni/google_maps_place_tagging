@@ -31,7 +31,15 @@ class PlacesController < ApplicationController
       end
     end #if-else
   end  
+
+  def edit
+    
+  end
   
+  def update
+    
+  end
+    
   def fetch_coordinates
     address =  params[:address]
     lat,lan = Geocoder.coordinates(address)

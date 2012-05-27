@@ -1,5 +1,7 @@
 AutosuggestAndTagging::Application.routes.draw do
   
+  get "search/index"
+
   root :to => 'places#index'  
   resources :places do 
     collection do
@@ -10,6 +12,7 @@ AutosuggestAndTagging::Application.routes.draw do
   end
   
   resources :tags
+  resources :search, :only => :index
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

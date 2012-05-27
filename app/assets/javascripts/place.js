@@ -110,37 +110,45 @@ function error(){
   alert('Can not locate your current location')
 }
 /*--------------------------------------------------------------------*/
-
+/*28.57, 77.32*/
 function markLocations(places_array){
    
+   
    var mapcanvas = document.createElement('div');
+   
    mapcanvas.id  = 'mapcanvas';
    mapcanvas.style.height = '670px';
    mapcanvas.style.width  = '1265px';
+   
    document.getElementById('map').innerHTML = '';
    document.getElementById('map').appendChild(mapcanvas);
    
    var myOptions = {
       mapTypeControl: false,
       zoom: 12,
-      center: new google.maps.LatLng(28.57, 77.32),
+      center: new google.maps.LatLng(0,0),
       navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
   
    MAP = new google.maps.Map(document.getElementById("mapcanvas"), myOptions);
    
-   for( i=0; i<places_array.markers.length;i++){
+   var bounds = new google.maps.LatLngBounds();
+   
+   for( i=0; i < places_array.markers.length; i++){
     
     var lat = places_array.markers[i].latitude;  
     var lng = places_array.markers[i].longitude; 
-   
+    var latlng = new google.maps.LatLng(lat, lng)   
     marker = new google.maps.Marker({
-        position: new google.maps.LatLng(lat, lng),
+        position: latlng,
         map: MAP,
         draggable: false,
         animation: google.maps.Animation.DROP
     });
+    
+    bounds.extend(latlng);
+    MAP.fitBounds(bounds); 
     
     setTimeout(function(){ 
         markers.push( marker); 
@@ -225,7 +233,6 @@ function fetchCoordinates(){
     .success( function(response){ 
         wait = false;
         if( response.lat == null  || response.lng == null ){
-            alert('Invalid address');
             $('#place_address').blur();
             locate_button.disabled = 'disabled';
            }
@@ -295,6 +302,5 @@ $(function(){
     });
 });
 
-/*--------------------- Starting Point---------------------------------- */
-
-
+//Use full links
+//http://stackoverflow.com/questions/1556921/google-map-api-v3-set-bounds-and-center

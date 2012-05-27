@@ -36,6 +36,10 @@
       </div>
     </div>
   <header class='subhead'>
+    <form action='<%=search_index_url%>' class="well form-search">
+      <input type="text" name='search' class="input-medium search-query" value='Search by tag' onfocus="if(this.value == 'Search by tag'){ this.value='' }" onblur="if(this.value == ''){ this.value='Search by tag' }">
+      <button type="submit" class="btn">Search</button>
+    </form>
     <%=yield :heading%>
   </header>
   <%= yield %>

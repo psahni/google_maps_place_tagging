@@ -5,11 +5,21 @@
 <% end %>
 
 <div class='row'>
-  <% @places.each do |place|%>
-  <div class='span12 solo_place'>
-    <h3 class='red'><%=place.name.capitalize%></h3>
-      <%=place.description%>
-    </p>
-  </div>
-  <% end%>
+  <% unless @places.empty? %>
+    <% @places.each do |place|%>
+    <div class='span12 pull-left solo_place'>
+      <div class='span6 pull-left'>
+        <h3 class='red'><%=place.name.capitalize%></h3>
+        <p>
+         <%=place.description%>
+        </p>
+      </div>
+      <div class='span4 pull-right'>
+       <%=link_to_function "Edit", "alert('Yet to implement')"%>
+      </div>
+    </div>
+    <% end%>
+ <% else %>
+  <h3 class='red'>No places found</h3>
+ <% end%>
 </div>
