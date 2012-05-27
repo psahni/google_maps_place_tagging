@@ -230,9 +230,10 @@ function fetchCoordinates(){
             locate_button.disabled = 'disabled';
            }
         else{
-                $('#place_latitude').val(response.lat);
-                $('#place_longitude').val(response.lng);
-             }
+             $('#place_latitude').val(response.lat);
+             $('#place_longitude').val(response.lng);
+             mapCoordinates();
+          }
      })
     .error(function(){
         wait = false; 
@@ -290,7 +291,6 @@ $(function(){
     $('#locate_button').bind('click', function(e){
         e.preventDefault;
         fetchCoordinates();
-        mapCoordinates();
         return false;
     });
 });
