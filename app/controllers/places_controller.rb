@@ -31,9 +31,12 @@ class PlacesController < ApplicationController
   end  
 
   def edit
+    @place = Place.find_by_id(params[:id])
+    render :layout => 'map'
   end
   
   def update
+    @place = Place.find_by_id(params[:id])
   end
     
   def fetch_coordinates

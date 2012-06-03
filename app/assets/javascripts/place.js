@@ -199,7 +199,7 @@ function resetAddressField(){
     var timer;
     $('#place_address').removeClass('no-validate');
     removeListenerToCoordinates()
-    $('.coordinates').addClass('no-validate').val(''); 
+   // $('.coordinates').addClass('no-validate').val(''); 
     unWrapErrorMessage();
     $('#place_address')
     .live('focus', function(){
