@@ -6,6 +6,7 @@ class Place < ActiveRecord::Base
 
   
   scope :name_blank, where('name IS NOT NULL')
+
   #=> Validations  
  
   validates :name, :latitude, :longitude, :presence => :true 

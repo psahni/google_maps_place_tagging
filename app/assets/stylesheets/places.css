@@ -6,6 +6,7 @@
  *= require bootstrap/css/bootstrap.css
  *= require bootstrap/css/bootstrap-responsive.css 
  *= require jquery.tagsinput
+ *= require common.css
 */
 
 
@@ -56,4 +57,8 @@ a:hover{
 }
 div#map{
     margin-top: 40px;
+}
+
+a.brand{
+  padding-left: 70px !important;
 }

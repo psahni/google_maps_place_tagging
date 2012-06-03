@@ -4,9 +4,7 @@ class PlacesController < ApplicationController
     @places = Place.all :include => :tags
     respond_to do |format|
       format.html
-      format.json{ 
-              render :json => { :markers => @places }
-          }
+      format.json{ render :json => { :markers => @places } }
     end
   end
 
@@ -33,11 +31,9 @@ class PlacesController < ApplicationController
   end  
 
   def edit
-    
   end
   
   def update
-    
   end
     
   def fetch_coordinates
