@@ -1,10 +1,9 @@
-/*var head       = document.getElementsByTagName('head')[0];
-var script     = document.createElement('script');
-script.type    = 'text/javascript';
-script.onload  = script.onreadystatechange = function(){ if(google){ markCurrentLocation();}} 
-script.src= "http://maps.googleapis.com/maps/api/js?sensor=false" ;   
-head.appendChild(script);
-*/
+
+window.onload = function(){
+    latitudeField  = document.getElementById('place_latitude');
+    longitudeField = document.getElementById('place_longitude');
+    locate_button  = document.getElementById('locate_button');
+} 
 
 
 
@@ -16,17 +15,6 @@ var minLengthForAddressField = 8;
 var wait = false;
 var markers = [];
 
-window.onload = function(){
-    latitudeField  = document.getElementById('place_latitude');
-    longitudeField = document.getElementById('place_longitude');
-    locate_button  = document.getElementById('locate_button');
-} 
-
-
-function initialize(){
-
-
-}
 
 function success(position){
 
@@ -41,6 +29,7 @@ function success(position){
    LONGITUDE = position.coords.longitude; 
    
    var latlng = new google.maps.LatLng(LATITUDE, LONGITUDE);
+   
    var myOptions = {
       mapTypeControl: false,
       zoom: 11,
@@ -51,15 +40,12 @@ function success(position){
   
   MAP = new google.maps.Map(document.getElementById("mapcanvas"), myOptions);
 
-/*  var infowindow = new google.maps.InfoWindow({
+  /*var infowindow = new google.maps.InfoWindow({
     content: "You are here"
   });
   
-  infowindow.open(MAP,marker);
-
-
-*/
-  
+  infowindow.open(MAP, latlng);
+  */
  
   var marker = new google.maps.Marker({
     position: latlng,
@@ -107,12 +93,12 @@ function success(position){
 /*--------------------------------------------------------------------*/
 
 function error(){
-  alert('Can not locate your current location')
+  $('#map').html('Can not locate your current location')
 }
+
 /*--------------------------------------------------------------------*/
 /*28.57, 77.32*/
-function markLocations(places_array){
-   
+function markLocations(places_array){   
    
    var mapcanvas = document.createElement('div');
    
@@ -201,6 +187,7 @@ function resetAddressField(){
     removeListenerToCoordinates()
    // $('.coordinates').addClass('no-validate').val(''); 
     unWrapErrorMessage();
+    $('#place_address_visible').val('true');
     $('#place_address')
     .live('focus', function(){
         /* There must be some better way to do it */
@@ -221,7 +208,8 @@ function resetCoordinatesField(){
     $('#place_address').addClass('no-validate'); 
     addListenerToCoordinates();
     $('.coordinates').removeClass('no-validate'); 
-    unWrapErrorMessage()
+    unWrapErrorMessage();
+    $('#place_address_visible').val('false');
 }
 
 /*--------------------------------------------------------------------*/
@@ -252,9 +240,7 @@ function fetchCoordinates(){
 
 function mapCoordinates(){
    clearOverlays();
-   
    var latlng = new google.maps.LatLng($('#place_latitude').val(), $('#place_longitude').val() );
-   
    var myOptions = {
       mapTypeControl: false,
       zoom: 11,
@@ -262,13 +248,11 @@ function mapCoordinates(){
       navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-  
     var marker = new google.maps.Marker({
         position: latlng,
         map: MAP,
         title:"You are here!"
   });
-
   MAP = new google.maps.Map(document.getElementById("mapcanvas"), myOptions);
   markers.push(marker);
   marker.setMap(MAP);
@@ -281,9 +265,7 @@ function clearOverlays() {
     for (var i = 0; i < markers.length; i++ ) {
       markers[i].setMap(null);
     }
-  }
-  
-  
+  }  
 }
 
 /*--------------------------------------------------------------------*/
@@ -302,5 +284,3 @@ $(function(){
     });
 });
 
-//Use full links
-//http://stackoverflow.com/questions/1556921/google-map-api-v3-set-bounds-and-center

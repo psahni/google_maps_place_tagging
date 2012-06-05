@@ -9,6 +9,7 @@
 <body>
   <div class='container'>
    <%=render :partial => 'layouts/navigation_bar'%>
+   <%=render_flash_message%>
    <header class='subhead'>
     <form action='<%=search_index_url%>' class="well form-search">
       <input type="text" name='search' class="input-medium search-query" value='Search by tag' onfocus="if(this.value == 'Search by tag'){ this.value='' }" onblur="if(this.value == ''){ this.value='Search by tag' }">

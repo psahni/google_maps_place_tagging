@@ -1,0 +1,11 @@
+/*var head       = document.getElementsByTagName('head')[0];
+var script     = document.createElement('script');
+script.type    = 'text/javascript';
+script.onload  = script.onreadystatechange = function(){ if(google){ markCurrentLocation();}} 
+script.src= "http://maps.googleapis.com/maps/api/js?sensor=false" ;   
+head.appendChild(script);
+*/
+
+
+//Use full links
+//http://stackoverflow.com/questions/1556921/google-map-api-v3-set-bounds-and-center

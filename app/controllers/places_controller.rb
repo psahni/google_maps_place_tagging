@@ -37,6 +37,18 @@ class PlacesController < ApplicationController
   
   def update
     @place = Place.find_by_id(params[:id])
+    @saved = @place.update_attributes(params[:place])
+    if @saved 
+      respond_to do |format|
+        format.html { redirect_to @place, :notice => 'Place has been successfully Updated' }
+        format.js { render :template => 'places/create.js.erb'}
+     end
+    else
+      respond_to do |format|
+        format.html{ render 'edit'}
+        format.js { render :json => { :errors => @place.errors, :status => :unprocessable_entity   } }
+      end
+    end    
   end
     
   def fetch_coordinates
