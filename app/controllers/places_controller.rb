@@ -60,5 +60,9 @@ class PlacesController < ApplicationController
   def full_map
     render :layout => 'map'
   end
-  
+
+  def location_count
+    render :layout => 'map'
+  end
+
 end

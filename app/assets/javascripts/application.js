@@ -49,6 +49,7 @@ var unWrapErrorMessage = function(){
 
 
 /* HIDE SHOW FIELDS */
+
 $(function(){
    $('.toggle').bind('click', function(e){
      e.preventDefault();

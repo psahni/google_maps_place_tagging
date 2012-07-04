@@ -7,6 +7,7 @@ AutosuggestAndTagging::Application.routes.draw do
     collection do
       get 'fetch_coordinates'
       get 'full_map'
+      get 'location_count'
     end
     
   end
